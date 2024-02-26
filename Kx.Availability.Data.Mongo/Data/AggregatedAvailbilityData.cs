@@ -8,7 +8,7 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Serilog;
 
-namespace Kx.Availability.Data.Mongo.Data;
+namespace Persistence.Kx.Availability.Data.Mongo.Data;
 
 public class AggregatedAvailabilityData : IDataAccessAggregation
 {

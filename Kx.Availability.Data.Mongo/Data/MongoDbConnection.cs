@@ -1,7 +1,7 @@
 ﻿using Kx.Core.Common.Data.MongoDB;
 using MongoDB.Driver;
 
-namespace Kx.Availability.Data.Mongo.Data
+namespace Persistence.Kx.Availability.Data.Mongo.Data
 {
     public class MongoDbConnection : IMongoDbConnection
     {

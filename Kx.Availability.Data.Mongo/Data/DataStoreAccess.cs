@@ -1,10 +1,10 @@
-﻿using Kx.Core.Common.Data;
+﻿using Domain.Interfaces;
+using Kx.Core.Common.Data;
 using Kx.Core.Common.HelperClasses;
-using Kx.Core.Common.Interfaces;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 
-namespace Kx.Availability.Data.Mongo.Data;
+namespace Persistence.Kx.Availability.Data.Mongo.Data;
 
 public class DataStoreAccess<T> : IDataAggregationStoreAccess<T> where T : class
 {

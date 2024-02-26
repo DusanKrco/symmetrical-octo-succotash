@@ -28,7 +28,7 @@
 
   <ItemGroup>    
     <ProjectReference Include="..\Kx.Availability.Data\Kx.Availability.Data.csproj" />    
-    <ProjectReference Include="..\Kx.Availability\Kx.Availability.csproj" />
+    <ProjectReference Include="..\Kx.Availability\Kx.Availability.API.csproj" />
     <ProjectReference Include="..\Kx.Availability.Data.Mongo\Kx.Availability.Data.Mongo.csproj" />
     <ProjectReference Include="..\Kx.Core.Common\Kx.Core.Common.csproj" />
     <ProjectReference Include="..\Kx.Core.HttpMocks\Kx.Core.HttpMocks.csproj" />

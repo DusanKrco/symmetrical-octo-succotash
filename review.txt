@@ -1,0 +1,28 @@
+Review
+
+Requirements for new features assume we must refactor code so that it easily serves for multiple endpoints - by changing the approach from minimal API to a Controller based API.
+
+To better serve future CQRS implementation and event driven data updates - a change of architecture was needed - namely CLEAN architecture as proposed by Microsoft - this can also serve for event driven requirements. CQRS would be a part of the Application layer (commands and command handlers). 
+To serve multiple databases a persistance layer is needed. 
+
+Note: Implementation is in a broken state at the moment, as it was heavily restructured. 
+
+Other smaller issues that were found:
+
+1. Referencing configuration variables with strings
+- Implement `Options` pattern and use DI to inject appropriate configuration. 
+2. Having configuration variables inside launchSettings.json
+- Extract them to appsettings.json
+3. Smaller naming inconsistencies 
+4. `Task.WhenAll()` incorrect exception handling
+- Inspect all tasks for exceptions instead of just catching one.  
+5. PII information gets leaked to logs, need to be anonymized before they reach the logs (room/location data is a part of the message that gets sent to logs)
+6. Smaller code style inconsistencies (e.g. if statements curly brackers).
+7. Unused `using` stamements.
+8. `Log.Information("DEBUG, using custom date time converter");` -> `Log.Debug("Using custom date time converter");`
+9.      private IEnumerable<LocationModel> `AddLocationModels(BedroomsDataStoreModel room)`
+-> private List<LocationModel> AddLocationModels(BedroomsDataStoreModel room)
+10. Some code may be deleted but not 100% since it could be used for mocking 
+
+
+

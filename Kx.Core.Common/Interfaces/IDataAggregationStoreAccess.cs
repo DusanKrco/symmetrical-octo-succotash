@@ -1,6 +1,6 @@
 using MongoDB.Driver;
 
-namespace Kx.Core.Common.Interfaces;
+namespace Domain.Interfaces;
 
 public interface IDataAggregationStoreAccess<T> where T:class
 {

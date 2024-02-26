@@ -1,9 +1,10 @@
 using Kx.Core.Common.Data;
 using Kx.Core.Common.HelperClasses;
-using Kx.Core.Common.Interfaces;
 using Microsoft.Extensions.Configuration;
+using Persistence.Kx.Availability.Data.Mongo.Abstractions;
+using Domain.Interfaces;
 
-namespace Kx.Availability.Data.Mongo.Data;
+namespace Persistence.Kx.Availability.Data.Mongo.Data;
 
 public class DataAccessFactory : IDataAccessFactory
 {
