@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Abstractions;
+using Domain.Enum;
 
 namespace Persistence.Kx.Availability.Data.Mongo.Abstractions;
 

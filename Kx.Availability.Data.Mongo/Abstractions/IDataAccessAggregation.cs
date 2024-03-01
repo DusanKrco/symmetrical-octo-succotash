@@ -1,9 +1,7 @@
-﻿using Domain.Enum;
-using Domain.Interfaces;
-using Persistence.Kx.Availability.Data.Mongo.Abstractions;
+﻿using Domain.Abstractions;
+using Domain.Enum;
 
-
-namespace Application.Interfaces;
+namespace Persistence.Kx.Availability.Data.Mongo.Abstractions;
 
 public interface IDataAccessAggregation : IDataAccess
 {

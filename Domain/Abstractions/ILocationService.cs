@@ -1,7 +1,7 @@
 ﻿using Domain.Models;
 using Domain.StoredModels;
 
-namespace Domain.Interfaces;
+namespace Domain.Abstractions;
 
 public interface ILocationService
 {

@@ -1,6 +1,5 @@
-﻿using System.Net;
-using Kx.Core.Common.Interfaces;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using System.Net;
 
 namespace Kx.Core.Common.HelperClasses;
 

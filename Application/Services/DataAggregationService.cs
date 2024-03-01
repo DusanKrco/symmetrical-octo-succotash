@@ -1,7 +1,8 @@
 ﻿using Application.Dto;
+using Application.Helpers;
 using Application.Interfaces;
+using Domain.Abstractions;
 using Domain.Enum;
-using Domain.Interfaces;
 using Domain.Models;
 using Domain.StoredModels;
 using Kx.Core.Common.Exceptions;
@@ -18,35 +19,35 @@ using System.Net.Http.Json;
 
 // ReSharper disable PossibleMultipleEnumeration
 
-namespace Application;
+namespace Application.Services;
 
 public class DataAggregationService : IDataAggregationService
 {
     private readonly ITenant _tenant;
     private readonly IRoomService _roomService;
-    private readonly ILocationService _locationService;      
-    private readonly IDataAccessAggregation _aggregateData;    
+    private readonly ILocationService _locationService;
+    private readonly IDataAccessAggregation _aggregateData;
     private readonly IDataAggregationStoreAccess<LocationsDataStoreModel> _locationsData;
-    private readonly IDataAggregationStoreAccess<BedroomsDataStoreModel> _roomsData;    
-    private readonly string? _mongoId;         
-        
+    private readonly IDataAggregationStoreAccess<BedroomsDataStoreModel> _roomsData;
+    private readonly string? _mongoId;
+
 
     public DataAggregationService(IDataAccessFactory dataAccessFactory, ITenant tenant, IConfiguration config,
         IRoomService roomService, ILocationService locationService)
     {
 
-        _tenant = tenant;                       
+        _tenant = tenant;
 
         var dbAccessAggregate = dataAccessFactory.GetDataAccess(KxDataType.AvailabilityAggregation);
         _aggregateData = DataAccessHelper.ParseAggregationDataAccess(dbAccessAggregate);
 
         _locationsData = dataAccessFactory.GetDataStoreAccess<LocationsDataStoreModel>();
         _roomsData = dataAccessFactory.GetDataStoreAccess<BedroomsDataStoreModel>();
-     
+
         _roomService = roomService;
         _locationService = locationService;
 
-        _mongoId = config.GetSection("MongoID").Value ?? null;             
+        _mongoId = config.GetSection("MongoID").Value ?? null;
     }
 
     private async Task CreateIndexes()
@@ -58,33 +59,33 @@ public class DataAggregationService : IDataAggregationService
     public async Task<(HttpStatusCode statusCode, string result)> ReloadOneTenantsDataAsync()
     {
         try
-        {            
-            
+        {
+
             _aggregateData.StartStateRecord();
-            
+
             Log.Information("Cleaning tmp table");
             await CleanTenantTempTablesAsync();
-            
+
             await CreateIndexes();
-                                    
+
             //1. Get Locations 
             var locationsTask = _locationService.DoLocationsAsync();
-                                    
+
             //2. Get the rooms
             var roomsTask = _roomService.DoRoomsAsync();
-            
+
             await Task.WhenAll(locationsTask, roomsTask);
-            
+
             //3. Mash them together
             //make the main table from all imported tables            
             await MashTempTablesIntoTheAvailabilityModelAsync();
-            
+
             //4. save tenantAvailabilityModel.            
-            await MoveTempTenantToLive();                        
+            await MoveTempTenantToLive();
             await CleanTenantTempTablesAsync();
-                        
+
             return (HttpStatusCode.NoContent, string.Empty);
-            
+
         }
         catch (Exception ex)
         {
@@ -96,15 +97,15 @@ public class DataAggregationService : IDataAggregationService
     {
         try
         {
-            
+
             var aggregatedAvailabilityModel = GetAggregatedDataStoreModel();
 
             var rooms = _roomsData.QueryFreely();
 
-            if (rooms is null || !rooms.Any()) throw new DataException();                                   
-            
+            if (rooms is null || !rooms.Any()) throw new DataException();
+
             foreach (var room in rooms)
-            {                                
+            {
                 var availabilityModel = CreateAvailabilityMongoModel();
                 availabilityModel.ID = _mongoId;
                 if (_mongoId is null)
@@ -114,29 +115,29 @@ public class DataAggregationService : IDataAggregationService
 
                 availabilityModel.TenantId = _tenant.TenantId;
                 availabilityModel.RoomId = room.RoomId;
-                
+
                 var addLocations = _locationService.AddLocationModels(room);
                 availabilityModel.Locations.AddRange(addLocations);
-                
+
                 aggregatedAvailabilityModel.Availability.Add(availabilityModel);
             }
-          
+
             await _aggregateData.InsertAsync(aggregatedAvailabilityModel);
-          
+
         }
         catch (Exception ex)
         {
             Log.Error($"Failed to mash data together: {ex}");
             throw;
         }
-    }    
+    }
 
     private AvailabilityMongoModel CreateAvailabilityMongoModel()
     {
         return new AvailabilityMongoModel
         {
             TenantId = _tenant.TenantId,
-            RoomId = string.Empty, 
+            RoomId = string.Empty,
             Locations = new List<LocationModel>()
         };
     }
@@ -148,7 +149,7 @@ public class DataAggregationService : IDataAggregationService
             TenantId = _tenant.TenantId
         };
         return data;
-    }  
+    }
 
     public async Task InsertStateAsync(ITenantDataModel item)
     {
@@ -170,14 +171,14 @@ public class DataAggregationService : IDataAggregationService
     private async Task CleanTenantTempTablesAsync()
     {
         await _locationsData.DeleteAsync();
-        await _roomsData.DeleteAsync();        
+        await _roomsData.DeleteAsync();
     }
 
     private async Task LogStateErrorsAsync(LocationType changeTableType, Exception ex)
     {
         await LogStateErrorsAsync(changeTableType.ToString(), ex);
     }
-    
+
     private async Task LogStateErrorsAsync(string changeType, Exception ex)
     {
         await _aggregateData.UpdateStateAsync(

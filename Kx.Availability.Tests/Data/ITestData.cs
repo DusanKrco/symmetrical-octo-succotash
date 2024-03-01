@@ -1,6 +1,4 @@
-using Kx.Core.Common.Interfaces;
-
-namespace Kx.Availability.Tests.Data;
+namespace Domain.Abstractions;
 
 public interface ITestData
 {

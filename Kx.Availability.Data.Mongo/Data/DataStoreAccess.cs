@@ -1,4 +1,4 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Abstractions;
 using Kx.Core.Common.Data;
 using Kx.Core.Common.HelperClasses;
 using MongoDB.Driver;

@@ -1,4 +1,4 @@
-using Kx.Core.Common.Interfaces;
+using Domain.Abstractions;
 using Microsoft.Extensions.Configuration;
 
 namespace Kx.Availability.Tests.Data;

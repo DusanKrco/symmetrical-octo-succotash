@@ -1,23 +1,26 @@
-using System.Text.Json.Serialization;
+using Application.Interfaces;
+using Application.Services;
+using Domain.Abstractions;
+using Domain.Models;
+using Domain.StoredModels;
+using Infrastructure.ExternalHttpApi;
 using Kx.Availability.Data.Connection;
-using Kx.Availability.Data.Implementation;
-using Kx.Availability.Data.Mongo.Data;
-using Kx.Availability.Data.Mongo.Models;
-using Kx.Availability.Data.Mongo.StoredModels;
-using Kx.Availability.Modules;
 using Kx.Core.Common.Data;
 using Kx.Core.Common.Data.MongoDB;
 using Kx.Core.Common.HelperClasses;
-using Kx.Core.Common.Interfaces;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.HttpLogging;
+using Persistence.Kx.Availability.Data.Mongo.Abstractions;
+using Persistence.Kx.Availability.Data.Mongo.Data;
 using Serilog;
+using System.Text.Json.Serialization;
 using static System.Net.Mime.MediaTypeNames;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();                            
 builder.Services.AddSwaggerGen();
 
@@ -43,15 +46,21 @@ builder.Host.UseSerilog(
 
 builder.Configuration.AddEnvironmentVariables();
 
+builder.Services.AddScoped<IDataAccessFactory, DataAccessFactory>();
 builder.Services.AddScoped<ITenant, Tenant>();
-
+builder.Services.AddScoped(typeof(IDataAggregationStoreAccess<>), typeof(DataStoreAccess<>));
+builder.Services.AddScoped<IRoomService, RoomService>();
+builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddSingleton<IKxJsonSettings, KxJsonSettings>();
 builder.Services.AddScoped<IConnectionDefinitionFactory, ConnectionDefinitionFactory>();
+builder.Services.AddScoped<IAvailabilityService, AvailabilityService>();
 
-builder.Services.AddScoped<IDataAccessFactory, DataAccessFactory>();
+
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IMongoSettings, MongoSettings>();
+
 builder.Services.AddScoped<IDataAggregationService, DataAggregationService>();
+
 
 builder.Services.AddHttpClient(nameof(LocationsDataStoreModel), client => { 
 });
@@ -78,8 +87,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.ConfigureDataAggregationsApi();
 
 app.UseSerilogRequestLogging();
 
@@ -115,6 +122,8 @@ app.Use(async (context, next) =>
     context.Request.EnableBuffering();
     await next.Invoke();    
 });
+
+app.MapControllers();
 
 if (string.IsNullOrWhiteSpace(listenPort))
 {

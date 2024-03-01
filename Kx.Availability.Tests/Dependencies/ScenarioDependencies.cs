@@ -1,15 +1,17 @@
-using Kx.Availability.Data.Implementation;
-using Kx.Availability.Data.Mongo.Data;
+using Application.Interfaces;
+using Application.Services;
+using Domain.Abstractions;
+using Infrastructure.ExternalHttpApi;
 using Kx.Availability.Tests.Data;
 using Kx.Core.Common.Data;
 using Kx.Core.Common.Data.MongoDB;
 using Kx.Core.Common.HelperClasses;
-using Kx.Core.Common.Interfaces;
 using Kx.Core.HttpMocks.HttpMocks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
+using Persistence.Kx.Availability.Data.Mongo.Abstractions;
+using Persistence.Kx.Availability.Data.Mongo.Data;
 using SolidToken.SpecFlow.DependencyInjection;
 using Xunit;
 
@@ -45,6 +47,9 @@ public class ScenarioDependencies
         services.AddScoped<IDataAccessFactory, DataAccessFactory>();
         services.AddScoped<ITestDataAccessFactory, TestMongoDataAccessFactory>();
         services.AddScoped<IMongoSettings, TestMongoSettings>();
+        builder.Services.AddScoped(typeof(IDataAggregationStoreAccess<>), typeof(DataStoreAccess<>));
+        services.AddScoped<IRoomService, RoomService>();
+        services.AddScoped<ILocationService, LocationService>();
         services.AddScoped<IDataAggregationService, DataAggregationService>();                
         services.AddSingleton<IKxJsonSettings, KxJsonTestSettings>();                        
 

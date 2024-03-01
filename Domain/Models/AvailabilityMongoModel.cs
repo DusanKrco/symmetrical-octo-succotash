@@ -1,8 +1,7 @@
-﻿using Kx.Core.Common.Interfaces;
+﻿using Domain.Abstractions;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Entities;
-using Persistence.Kx.Availability.Data.Mongo.Models;
 
 namespace Domain.Models;
 

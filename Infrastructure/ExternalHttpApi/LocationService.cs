@@ -1,18 +1,17 @@
-﻿using Application.Interfaces;
-using Domain.Interfaces;
-using Kx.Core.Common.Data;
+﻿using Application.Dto;
+using Application.Helpers;
+using Domain.Abstractions;
+using Domain.Enum;
+using Domain.Models;
+using Domain.StoredModels;
 using Kx.Core.Common.Exceptions;
-using Kx.Core.Common.HelperClasses;
-using Kx.Core.Common.Interfaces;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
-using Persistence.Kx.Availability.Data.Mongo;
-using Persistence.Kx.Availability.Data.Mongo.Models;
-using Persistence.Kx.Availability.Data.Mongo.StoredModels;
+using Persistence.Kx.Availability.Data.Mongo.Abstractions;
 using Serilog;
 using System.Net.Http.Json;
 
-namespace Kx.Availability.Data.Implementation;
+namespace Infrastructure.ExternalHttpApi;
 
 public class LocationService : ILocationService
 {

@@ -1,3 +1,5 @@
+using Domain.Abstractions;
+
 namespace Kx.Availability.Tests.Data;
 
 public class TestMongoDataAccessFactory : ITestDataAccessFactory

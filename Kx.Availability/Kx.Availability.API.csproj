@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\Kx.Availability.Data.Mongo\Kx.Availability.Data.Mongo.csproj" />
     <ProjectReference Include="..\Kx.Availability.Data\Kx.Availability.Data.csproj" />
     <ProjectReference Include="..\Kx.Core.Common\Kx.Core.Common.csproj" />
@@ -37,6 +38,10 @@
 
   <ItemGroup>
     <None Remove="logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Modules\" />
   </ItemGroup>
   
 </Project>

@@ -1,13 +1,9 @@
 ﻿using Application.Interfaces;
-using Kx.Core.Common.HelperClasses;
-//using Kx.Core.Common.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 
 namespace Kx.Availability.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [Route("bedroom-availability")]
     public class AvailabilityController : ControllerBase
     {
         private readonly IAvailabilityService _availabilityService;

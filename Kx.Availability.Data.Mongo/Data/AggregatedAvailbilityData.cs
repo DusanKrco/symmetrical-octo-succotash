@@ -1,12 +1,14 @@
-﻿using System.Data;
-using Kx.Availability.Data.Mongo.Models;
+﻿using Domain.Abstractions;
+using Domain.Enum;
+using Domain.Models;
 using Kx.Core.Common.Data;
 using Kx.Core.Common.HelperClasses;
-using Kx.Core.Common.Interfaces;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using Persistence.Kx.Availability.Data.Mongo.Abstractions;
 using Serilog;
+using System.Data;
 
 namespace Persistence.Kx.Availability.Data.Mongo.Data;
 

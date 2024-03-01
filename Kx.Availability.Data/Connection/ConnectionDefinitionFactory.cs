@@ -1,6 +1,6 @@
-using Kx.Availability.Data.Mongo.Data;
 using Kx.Core.Common.Data;
 using Kx.Core.Common.Data.MongoDB;
+using Persistence.Kx.Availability.Data.Mongo.Data;
 
 namespace Kx.Availability.Data.Connection;
 

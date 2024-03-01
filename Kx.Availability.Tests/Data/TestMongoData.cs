@@ -1,5 +1,5 @@
-using Kx.Availability.Data.Mongo.Models;
-using Kx.Core.Common.Interfaces;
+using Domain.Abstractions;
+using Domain.Models;
 using MongoDB.Entities;
 
 namespace Kx.Availability.Tests.Data;

@@ -1,12 +1,12 @@
-﻿using System.Net;
+﻿using Application.Interfaces;
+using Domain.Models;
+using Domain.StoredModels;
 using FluentAssertions;
-using Kx.Availability.Data.Mongo.Models;
-using Kx.Availability.Data.Mongo.StoredModels;
 using Kx.Availability.Tests.logging;
 using Kx.Core.Common.HelperClasses;
-using Kx.Core.Common.Interfaces;
 using Kx.Core.HttpMocks.HttpMocks;
 using Newtonsoft.Json;
+using System.Net;
 using TechTalk.SpecFlow;
 using Xunit.Abstractions;
 

@@ -1,6 +1,4 @@
-﻿using Kx.Core.Common.Interfaces;
-
-namespace Domain.Interfaces;
+﻿namespace Domain.Abstractions;
 
 public interface IRoomService
 {

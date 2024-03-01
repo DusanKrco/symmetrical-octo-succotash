@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using Domain.Abstractions;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Entities;
 

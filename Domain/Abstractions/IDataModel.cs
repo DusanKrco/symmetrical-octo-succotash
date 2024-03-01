@@ -1,3 +1,3 @@
-namespace Domain.Interfaces;
+namespace Domain.Abstractions;
 
 public interface IDataModel { }

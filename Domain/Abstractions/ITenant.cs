@@ -1,4 +1,4 @@
-namespace Application.Interfaces;
+namespace Domain.Abstractions;
 
 public interface ITenant
 {

@@ -3,7 +3,7 @@ using Kx.Core.Common.HelperClasses;
 using Microsoft.AspNetCore.Http;
 using Serilog;
 
-namespace Application.Availability
+namespace Application.Services
 {
     public class AvailabilityService : IAvailabilityService
     {

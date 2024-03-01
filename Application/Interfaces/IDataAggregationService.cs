@@ -1,4 +1,4 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Abstractions;
 using System.Net;
 
 namespace Application.Interfaces;

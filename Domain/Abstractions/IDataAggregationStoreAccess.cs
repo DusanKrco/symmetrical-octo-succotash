@@ -1,6 +1,6 @@
 using MongoDB.Driver;
 
-namespace Domain.Interfaces;
+namespace Domain.Abstractions;
 
 public interface IDataAggregationStoreAccess<T> where T:class
 {

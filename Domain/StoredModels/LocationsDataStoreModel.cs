@@ -1,7 +1,6 @@
-using Kx.Core.Common.Interfaces;
+using Domain.Abstractions;
 
 namespace Domain.StoredModels;
-
 
 public class LocationsDataStoreModel : IDataStoreModel
 {

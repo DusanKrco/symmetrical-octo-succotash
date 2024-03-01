@@ -1,8 +1,9 @@
+using Domain.Abstractions;
+using Domain.Enum;
 using Kx.Core.Common.Data;
 using Kx.Core.Common.HelperClasses;
 using Microsoft.Extensions.Configuration;
 using Persistence.Kx.Availability.Data.Mongo.Abstractions;
-using Domain.Interfaces;
 
 namespace Persistence.Kx.Availability.Data.Mongo.Data;
 

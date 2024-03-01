@@ -1,5 +1,4 @@
-﻿namespace Kx.Core.Common.Interfaces;
-
+﻿namespace Domain.Abstractions;
 public interface IDataStoreModel : IDataModel
 {
    
